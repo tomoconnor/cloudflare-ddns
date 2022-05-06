@@ -1,5 +1,7 @@
 Cloudflare Dynamic DNS updater tool.
 ====================================
+This tool updates a specific record in your cloudflare DNS zone with the local IP of the machine it's running on (Not the public IP).
+
 
 Set environment variables: 
 * `CF_API_TOKEN` -- your API token
