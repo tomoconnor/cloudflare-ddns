@@ -21,7 +21,9 @@ func GetOutboundIP() net.IP {
 
 	return localAddr.IP
 }
-
+func BoolPointer(b bool) *bool {
+	return &b
+}
 func main() {
 	api_token := os.Getenv("CF_API_TOKEN")
 	if api_token == "" {
@@ -36,6 +38,16 @@ func main() {
 	record_prefix := os.Getenv("CF_RECORD_PREFIX")
 	if record_prefix == "" {
 		record_prefix = "controller"
+	}
+	proxy_mode := os.Getenv("CF_PROXY_MODE")
+	if proxy_mode == "" {
+		log.Fatal("CF_PROXY_MODE is not set")
+	}
+	CloudFlareProxyMode := false
+	if proxy_mode == "true" {
+		CloudFlareProxyMode = true
+	} else {
+		CloudFlareProxyMode = false
 	}
 
 	record_name := record_prefix + "." + zone_name
@@ -57,6 +69,7 @@ func main() {
 		Name:    record_name,
 		Content: GetOutboundIP().String(),
 		TTL:     60,
+		Proxied: BoolPointer(CloudFlareProxyMode),
 	}
 
 	// Fetch records for the requested record.
