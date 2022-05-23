@@ -1,0 +1,9 @@
+[Unit]
+Description=Run Cloudflare DDNS Updater
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+
+[Install]
+WantedBy=timers.target

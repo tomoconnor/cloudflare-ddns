@@ -1,0 +1,13 @@
+[Unit]
+Description=Cloudflare DDNS Client
+After=network.target
+
+[Service]
+EnvironmentFile=-/etc/default/cloudflareddns
+ExecStart=/usr/local/bin/cloudflareddns
+Restart=on-failure
+Type=simple
+
+[Install]
+WantedBy=multi-user.target
+Alias=ddns.service
